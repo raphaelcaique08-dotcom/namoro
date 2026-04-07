@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido Especial 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('foto.jpg') no-repeat center/cover;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+    z-index: -1;
+}
+
+/* Tela inicial */
+#startScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#startScreen button {
+    padding: 15px 30px;
+    border-radius: 20px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Conteúdo */
+.container {
+    padding: 20px;
+}
+
+.photo {
+    width: 220px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.5);
+    margin-top: 15px;
+}
+
+/* Botões */
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 15px 25px;
+    border-radius: 20px;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.yes {
+    background: #ff4b5c;
+    color: white;
+}
+
+.no {
+    position: absolute;
+}
+
+/* Final épico */
+#final {
+    display: none;
+    margin-top: 20px;
+}
+
+.epic {
+    animation: zoomIn 1s ease;
+}
+
+.epic h1 {
+    font-size: 2.5em;
+}
+
+.epic p {
+    font-size: 1.3em;
+}
+
+.love {
+    font-size: 2em;
+    margin-top: 20px;
+    color: #00c3ff;
+    text-shadow: 0 0 10px #00c3ff, 0 0 20px #00c3ff;
+    animation: glow 1.5s infinite alternate;
+}
+
+/* animações */
+@keyframes zoomIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px #00c3ff; }
+    to { text-shadow: 0 0 25px #00c3ff; }
+}
+
+/* corações */
+.heart {
+    position: absolute;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Música -->
+<iframe width="0" height="0"
+src="https://www.youtube.com/embed/0r9s0kS1F8E?autoplay=1&loop=1&playlist=0r9s0kS1F8E"
+allow="autoplay">
+</iframe>
+
+<!-- Tela inicial -->
+<div id="startScreen">
+    <h1>💙 Tenho algo especial pra você 💙</h1>
+    <button onclick="start()">Entrar 💖</button>
+</div>
+
+<!-- Conteúdo -->
+<div class="container" id="main" style="display:none;">
+    <h1>Vitória Garcia Santos Soares 💖</h1>
+
+    <img src="foto.jpg" class="photo">
+
+    <p id="text"></p>
+
+    <h2>Quer namorar comigo? 🥺</h2>
+
+    <div class="buttons">
+        <button class="yes" onclick="yes()">SIM 💖</button>
+        <button class="no" id="noBtn">NÃO 😢</button>
+    </div>
+
+    <div id="final"></div>
+</div>
+
+<script>
+function start(){
+    document.getElementById("startScreen").style.display="none";
+    document.getElementById("main").style.display="block";
+    typeText();
+    hearts();
+}
+
+/* texto */
+const msg = "Desde que você apareceu na minha vida, tudo ficou diferente... 💫 Eu olho pra gente e tenho certeza que é você que eu quero ao meu lado todos os dias 💖";
+
+let i=0;
+function typeText(){
+    if(i<msg.length){
+        document.getElementById("text").innerHTML += msg.charAt(i);
+        i++;
+        setTimeout(typeText,40);
+    }
+}
+
+/* botão fugir */
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseover", ()=>{
+    noBtn.style.left = Math.random()*90+"%";
+    noBtn.style.top = Math.random()*90+"%";
+});
+
+/* FINAL ÉPICO */
+function yes(){
+    const final = document.getElementById("final");
+    final.style.display = "block";
+
+    final.innerHTML = `
+        <div class="epic">
+            <h1>EU SABIA 😍💖</h1>
+            <p>Agora você é minha namorada!!! 💑✨</p>
+            <h2 class="love">Te amo, Pelegrina 💙</h2>
+        </div>
+    `;
+
+    explodeHearts();
+}
+
+/* explosão de corações */
+function explodeHearts(){
+    for(let i = 0; i < 50; i++){
+        const heart = document.createElement("div");
+        heart.innerHTML = "💖";
+        heart.style.position = "fixed";
+        heart.style.left = "50%";
+        heart.style.top = "50%";
+        heart.style.fontSize = (10 + Math.random()*30) + "px";
+
+        const x = (Math.random() - 0.5) * 600;
+        const y = (Math.random() - 0.5) * 600;
+
+        heart.animate([
+            { transform: "translate(0,0)", opacity: 1 },
+            { transform: `translate(${x}px, ${y}px)`, opacity: 0 }
+        ], {
+            duration: 1500,
+            easing: "ease-out"
+        });
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 1500);
+    }
+}
+
+/* corações caindo */
+function hearts(){
+    setInterval(()=>{
+        const h=document.createElement("div");
+        h.className="heart";
+        h.innerHTML="💖";
+        h.style.left=Math.random()*100+"vw";
+        h.style.fontSize=(10+Math.random()*20)+"px";
+        h.style.animationDuration=(2+Math.random()*3)+"s";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),5000);
+    },300);
+}
+</script>
+
+</body>
+</html>
